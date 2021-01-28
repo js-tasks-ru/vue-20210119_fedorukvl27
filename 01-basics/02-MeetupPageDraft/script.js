@@ -14,7 +14,6 @@ export const app = new Vue({
     let response = await fetch(`${API_URL}/meetups/${MEETUP_ID}`);
     let fetchedMeetup = await response.json();
     this.defaultMeetups.push(fetchedMeetup);
-    console.log(this.meetups)
   },
   computed:{
     meetups(){
