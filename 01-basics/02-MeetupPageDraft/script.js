@@ -7,48 +7,52 @@ export const app = new Vue({
   el: '#app',
   data(){
     return{
-      defaultMeetups: [],
+      defaultMeetup: null,
     };
   },
   async mounted(){
     let response = await fetch(`${API_URL}/meetups/${MEETUP_ID}`);
     let fetchedMeetup = await response.json();
-    this.defaultMeetups.push(fetchedMeetup);
+    return this.defaultMeetup = ({
+      ...fetchedMeetup,
+      agendaItemIcons : {
+        registration: 'key',
+        opening: 'cal-sm',
+        talk: 'tv',
+        break: 'clock',
+        coffee: 'coffee',
+        closing: 'key',
+        afterparty: 'cal-sm',
+        other: 'cal-sm',
+      },
+      agendaItemTitles : {
+        registration: 'Регистрация',
+        opening: 'Открытие',
+        break: 'Перерыв',
+        coffee: 'Coffee Break',
+        closing: 'Закрытие',
+        afterparty: 'Afterparty',
+        talk: 'Доклад',
+        other: 'Другое',
+      },
+    });
   },
   computed:{
-    meetups(){
-      return this.defaultMeetups.map((meetup)=>({
-        ...meetup,
-        agendaItemIcons : {
-          registration: 'key',
-          opening: 'cal-sm',
-          talk: 'tv',
-          break: 'clock',
-          coffee: 'coffee',
-          closing: 'key',
-          afterparty: 'cal-sm',
-          other: 'cal-sm',
-        },
-        agendaItemTitles : {
-          registration: 'Регистрация',
-          opening: 'Открытие',
-          break: 'Перерыв',
-          coffee: 'Coffee Break',
-          closing: 'Закрытие',
-          afterparty: 'Afterparty',
-          talk: 'Доклад',
-          other: 'Другое',
-        },
-        coverStyle: meetup.imageId 
-        ? {'--bg-url' : `url(${this.getMeetupCoverLink(meetup)})`} 
-        : '',
-        localDate: new Date(meetup.date).toLocaleString(navigator.language,{
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-        })
-      }))
-    }
+    meetup(){
+      if(this.defaultMeetup){
+        return ({
+          ...this.defaultMeetup,
+          coverStyle: this.defaultMeetup.imageId 
+          ? {'--bg-url' : `url(${this.getMeetupCoverLink(this.defaultMeetup)})`} 
+          : '',
+          localDate: new Date(this.defaultMeetup.date).toLocaleString(navigator.language,{
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          }),
+        });
+    };
+    },
   },
   methods:{
     getMeetupCoverLink(meetup) {
