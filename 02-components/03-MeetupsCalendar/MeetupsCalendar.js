@@ -13,9 +13,9 @@ export const MeetupsCalendar = {
         </div>
       </div>
       <div class="rangepicker__date-grid">
-      <div class="rangepicker__cell" v-for="(day,index) in actualDayList">
+      <div :class="(day.isPreviousMonth || day.isNextMonth) ? 'rangepicker__cell rangepicker__cell_inactive' : 'rangepicker__cell' " v-for="(day,index) in actualDayList">
         {{day.id}}
-        <div v-for="meetup in formatedMeetups">
+        <div v-for="meetup in formatedMeetups" :key="meetup.id">
           <a v-if="day.date === meetup.date" class="rangepicker__event">{{meetup.title}}</a>
         </div>
       </div>
@@ -39,7 +39,7 @@ export const MeetupsCalendar = {
       if(this.meetups){
         return this.meetups.map(meetup=>({
           ...meetup,
-          date: String(new Date(meetup.date)).slice(0,15),
+          date: new Date(meetup.date).toISOString().slice(0,10),
         }));
       }
     },
