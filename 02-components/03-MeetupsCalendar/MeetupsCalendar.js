@@ -1,42 +1,79 @@
-/*
-  Полезные функции по работе с датой можно описать вне Vue компонента
- */
+import {getActualMonth, daysInMonth} from './data.js'
 
 export const MeetupsCalendar = {
   name: 'MeetupsCalendar',
 
-  template: `<div class="rangepicker">
-    <div class="rangepicker__calendar">
+  template: `<div class="rangepicker" v-if="meetups">
+    <div class="rangepicker__calendar" >
       <div class="rangepicker__month-indicator">
         <div class="rangepicker__selector-controls">
-          <button class="rangepicker__selector-control-left"></button>
-          <div>Июнь 2020</div>
-          <button class="rangepicker__selector-control-right"></button>
+          <button class="rangepicker__selector-control-left" @click="changeMonth('previous')"></button>
+          <div>{{actualLocaleMonth + ' ' + actualYear}}</div>
+          <button class="rangepicker__selector-control-right" @click="changeMonth('next')"></button>
         </div>
       </div>
       <div class="rangepicker__date-grid">
-        <div class="rangepicker__cell rangepicker__cell_inactive">28</div>
-        <div class="rangepicker__cell rangepicker__cell_inactive">29</div>
-        <div class="rangepicker__cell rangepicker__cell_inactive">30</div>
-        <div class="rangepicker__cell rangepicker__cell_inactive">31</div>
-        <div class="rangepicker__cell">
-          1
-          <a class="rangepicker__event">Митап</a>
-          <a class="rangepicker__event">Митап</a>
+      <div class="rangepicker__cell" v-for="(day,index) in actualDayList">
+        {{day.id}}
+        <div v-for="meetup in formatedMeetups">
+          <a v-if="day.date === meetup.date" class="rangepicker__event">{{meetup.title}}</a>
         </div>
-        <div class="rangepicker__cell">2</div>
-        <div class="rangepicker__cell">3</div>
+      </div>
       </div>
     </div>
   </div>`,
 
-  // Пропсы
-
-  // В качестве локального состояния требуется хранить что-то,
-  // что позволит определить текущий показывающийся месяц.
-  // Изначально должен показываться текущий месяц
-
-  // Вычислимые свойства помогут как с получением списка дней, так и с выводом информации
-
-  // Методы понадобятся для переключения между месяцами
+  props:{
+    meetups:{
+      type: Array,
+      required: true,
+    }
+  },
+  data(){
+    return {
+      defaultDate: new Date(),
+    };
+  },
+  computed:{
+    formatedMeetups(){
+      if(this.meetups){
+        return this.meetups.map(meetup=>({
+          ...meetup,
+          date: String(new Date(meetup.date)).slice(0,15),
+        }));
+      }
+    },
+    actualLocaleMonth(){
+      return getActualMonth(this.defaultDate);
+    },
+    actualMonth(){
+      return this.defaultDate.getMonth();
+    },
+    actualYear(){
+      return this.defaultDate.getFullYear();
+    },
+    actualDayList(){
+      return daysInMonth(this.actualMonth,this.actualYear)
+    },
+  },
+  methods:{
+    changeMonth(value){
+      if(this.defaultDate){
+        switch(value){
+          case "previous":
+            this.defaultDate = new Date(
+              this.defaultDate.setMonth(getActualMonth(this.defaultDate,value))
+            );
+            break;
+          case "next":
+            this.defaultDate = new Date(
+              this.defaultDate.setMonth(getActualMonth(this.defaultDate,value))
+            );
+            break;
+          default:
+            return false;
+        };
+      };
+    },
+  },
 };
