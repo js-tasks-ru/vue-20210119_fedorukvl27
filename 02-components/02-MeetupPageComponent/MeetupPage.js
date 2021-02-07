@@ -12,30 +12,16 @@ export const MeetupPage = {
 
   data(){
     return{
-      defaultMeetup: null,
-      defaultMeetupCoverLink: '',
+      meetup: null,
     }
   },
 
   async mounted(){
     try{
-      this.defaultMeetup = await fetchMeetup(MEETUP_ID);
+      this.meetup = await fetchMeetup(MEETUP_ID);
     }catch(e){
       console.log(e);
     }
-    this.defaultMeetupCoverLink = getMeetupCoverLink(this.defaultMeetup);
-  },
-
-  computed:{
-    meetup(){
-      if(this.defaultMeetup){
-        return ({
-          ...this.defaultMeetup,
-          link: this.defaultMeetupCoverLink,
-          date: new Date(this.defaultMeetup.date),
-        })
-      }
-    },
   },
 
 };

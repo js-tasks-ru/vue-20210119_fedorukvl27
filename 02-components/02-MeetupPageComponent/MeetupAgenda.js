@@ -4,7 +4,7 @@ export const MeetupAgenda = {
   name: 'MeetupAgenda',
 
   template: `
-    <div class="meetup-agenda" v-if="agenda">
+    <div class="meetup-agenda">
       <div class="meetup-agenda__item" v-for="agendaItem in agenda">
         <meetup-agenda-item :agendaItem="agendaItem" :key="agendaItem.id"></meetup-agenda-item>
       </div>

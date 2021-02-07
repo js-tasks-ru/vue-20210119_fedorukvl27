@@ -2,19 +2,19 @@ import {agendaItemTitles, agendaItemIcons} from './data.js'
 
 export const MeetupAgendaItem = {
   name: 'MeetupAgendaItem',
-  template: `<div class="meetup-agenda__item" v-if="agendaItem">
+  template: `<div class="meetup-agenda__item">
       <div class="meetup-agenda__item-col">
-        <img class="icon" alt="icon" :src="'/assets/icons/icon-' + $options.agendaItemIcons[agendaItem.type] + '.svg'" />
+        <img class="icon" alt="icon" :src="'/assets/icons/icon-' + $options.agendaItemIcons[filteredAgendaItem.type] + '.svg'" />
       </div>
-      <div class="meetup-agenda__item-col">{{agendaItem.startsAt}} - {{agendaItem.endsAt}}</div>
+      <div class="meetup-agenda__item-col">{{filteredAgendaItem.startsAt}} - {{filteredAgendaItem.endsAt}}</div>
       <div class="meetup-agenda__item-col">
-        <h5 class="meetup-agenda__title">{{checkAgendaTitle()}}</h5>
+        <h5 class="meetup-agenda__title">{{filteredAgendaItem.title}}</h5>
         <p v-if="agendaItem.speaker">
-          <span>{{agendaItem.speaker}}</span>
+          <span>{{filteredAgendaItem.speaker}}</span>
           <span class="meetup-agenda__dot"></span>
-          <span class="meetup-agenda__lang">{{agendaItem.language}}</span>
+          <span class="meetup-agenda__lang">{{filteredAgendaItem.language}}</span>
         </p>
-        <p v-if="agendaItem.description">{{agendaItem.description}}</p>
+        <p v-if="agendaItem.description">{{filteredAgendaItem.description}}</p>
       </div>
     </div>`,
 
@@ -24,14 +24,17 @@ export const MeetupAgendaItem = {
       required: true,
     }
   },
+  computed:{
+    filteredAgendaItem(){
+      return {
+        ...this.agendaItem,
+        title: this.agendaItem.title ? this.agendaItem.title : this.$options.agendaItemTitles[this.agendaItem.type],
+      }
+    },
+  },
 
   agendaItemTitles : agendaItemTitles,
 
   agendaItemIcons: agendaItemIcons,
 
-  methods:{
-    checkAgendaTitle(){
-      return this.agendaItem.title ? this.agendaItem.title : this.$options.agendaItemTitles[this.agendaItem.type]
-    }
-  }
 };

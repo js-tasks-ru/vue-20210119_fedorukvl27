@@ -2,13 +2,14 @@ import { MeetupCover } from './MeetupCover.js';
 import { MeetupDescription } from './MeetupDescription.js';
 import { MeetupAgenda } from './MeetupAgenda.js';
 import { MeetupInfo } from './MeetupInfo.js';
+import { getMeetupCoverLink } from './data.js';
 
 export const MeetupView = {
   name: 'MeetupView',
 
   template: `
-    <div v-if="meetup">
-      <meetup-cover :link="meetup.link" :title="meetup.title"></meetup-cover>
+    <div>
+      <meetup-cover :link="coverLink" :title="meetup.title"></meetup-cover>
       <div class="container">
         <div class="meetup">
           <div class="meetup__content">
@@ -18,7 +19,7 @@ export const MeetupView = {
             <meetup-agenda :agenda="meetup.agenda"></meetup-agenda>
           </div>
           <div class="meetup__aside">
-            <meetup-info :place="meetup.place" :organizer="meetup.organizer" :date="meetup.date"></meetup-info>
+            <meetup-info :place="meetup.place" :organizer="meetup.organizer" :date="new Date(meetup.date)"></meetup-info>
           </div>
         </div>
       </div>
@@ -38,4 +39,10 @@ export const MeetupView = {
       required: true,
     }
   },
+  
+  computed:{
+    coverLink(){
+      return getMeetupCoverLink(this.meetup);
+    }
+  }
 };

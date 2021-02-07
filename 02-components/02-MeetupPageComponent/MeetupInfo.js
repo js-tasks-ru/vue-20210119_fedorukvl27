@@ -1,5 +1,5 @@
 export const MeetupInfo = {
-  template: `<ul class="info-list" v-if="organizer && place && date">
+  template: `<ul class="info-list" >
       <li>
         <img class="icon info-list__icon" alt="icon" src="/assets/icons/icon-user.svg" />
         {{organizer}}
