@@ -1,8 +1,8 @@
-const monthArray =['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
-
 export function getActualMonth(date,action){
     if(!action){
-        return monthArray[date.getMonth()];
+        return date.toLocaleString(navigator.language,{
+            month: 'long',
+        });
     }
     else if(action === 'next'){
         return date.getMonth()+1;
@@ -38,5 +38,6 @@ export function daysInMonth(month, year) {
             date: new Date(year,month,day).toISOString().slice(0,10),
         });
     }
+    console.log(dayList);
     return dayList;
 }
