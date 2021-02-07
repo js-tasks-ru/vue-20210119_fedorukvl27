@@ -1,5 +1,5 @@
 export const CounterButton = {
-  template: '<button type="button" :value="count" @click="handleIncrement">{{count}}</button>',
+  template: '<button type="button" @click="handleIncrement">{{count}}</button>',
   
   props:{
     count:{
@@ -14,8 +14,8 @@ export const CounterButton = {
   },
 
   methods:{
-    handleIncrement(event){
-      this.$emit('increment', ++event.target.value)
+    handleIncrement(){
+      this.$emit('increment', this.count+1)
     }
   }
 };
