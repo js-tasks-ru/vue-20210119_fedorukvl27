@@ -1,4 +1,4 @@
-import {getActualMonth, daysInMonth} from './data.js'
+import {getActualMonth, getDaysInMonth} from './data.js'
 
 export const MeetupsCalendar = {
   name: 'MeetupsCalendar',
@@ -13,11 +13,11 @@ export const MeetupsCalendar = {
         </div>
       </div>
       <div class="rangepicker__date-grid">
-      <div :class="(day.isPreviousMonth || day.isNextMonth) ? 'rangepicker__cell rangepicker__cell_inactive' : 'rangepicker__cell' " v-for="(day,index) in actualDayList">
+      <div :class="(day.isPreviousMonth || day.isNextMonth) ? 'rangepicker__cell rangepicker__cell_inactive' : 'rangepicker__cell' " v-for="(day,index) in meetupsInMonthList">
         {{day.id}}
-          <div v-for="meetupDate in meetupsDatesList">
-            <a v-if="meetupDate.date === day.date" class="rangepicker__event">{{meetupDate.title}}</a>
-          </div>
+        <div v-for="meetup in day.meetupsToday">
+          <a class="rangepicker__event">{{meetup.title}}</a>
+        </div>
       </div>
       </div>
     </div>
@@ -35,11 +35,22 @@ export const MeetupsCalendar = {
     };
   },
   computed:{
-    meetupsDatesList(){
+    formatedMeetupsList(){
       return this.meetups.map(meetup=>({
-        title: meetup.title,
+        ...meetup,
         date: new Date(meetup.date).toISOString().slice(0,10),
       }));
+    },
+    meetupsInMonthList(){
+      for(let x=0;x<this.actualDaysInMonthList.length;x++){
+        this.actualDaysInMonthList[x].meetupsToday=[];
+        for(let i=0;i<=this.formatedMeetupsList.length;i++){
+          if(this.formatedMeetupsList[i] && this.actualDaysInMonthList[x].date === this.formatedMeetupsList[i].date){
+            this.actualDaysInMonthList[x].meetupsToday.push(this.formatedMeetupsList[i]);
+          }
+        }
+      }
+      return this.actualDaysInMonthList;
     },
     actualLocaleMonth(){
       return getActualMonth(this.defaultDate);
@@ -50,8 +61,8 @@ export const MeetupsCalendar = {
     actualYear(){
       return this.defaultDate.getFullYear();
     },
-    actualDayList(){
-      return daysInMonth(this.actualMonth,this.actualYear)
+    actualDaysInMonthList(){
+      return getDaysInMonth(this.actualMonth,this.actualYear)
     },
   },
   methods:{
@@ -62,7 +73,6 @@ export const MeetupsCalendar = {
             this.defaultDate = new Date(
               this.defaultDate.setMonth(getActualMonth(this.defaultDate,value))
             );
-            console.log(this.meetupsDatesList)
             break;
           case "next":
             this.defaultDate = new Date(
