@@ -42,15 +42,18 @@ export const MeetupsCalendar = {
       }));
     },
     meetupsInMonthList(){
-      for(let x=0;x<this.actualDaysInMonthList.length;x++){
-        this.actualDaysInMonthList[x].meetupsToday=[];
+      let meetupsInMonth = this.actualDaysInMonthList.map(day=>({
+        ...day,
+        meetupsToday: [],
+      }));
+      for(let x=0;x<meetupsInMonth.length;x++){
         for(let i=0;i<=this.formatedMeetupsList.length;i++){
-          if(this.formatedMeetupsList[i] && this.actualDaysInMonthList[x].date === this.formatedMeetupsList[i].date){
-            this.actualDaysInMonthList[x].meetupsToday.push(this.formatedMeetupsList[i]);
+          if(this.formatedMeetupsList[i] && meetupsInMonth[x].date === this.formatedMeetupsList[i].date){
+            meetupsInMonth[x].meetupsToday.push(this.formatedMeetupsList[i]);
           }
         }
       }
-      return this.actualDaysInMonthList;
+      return meetupsInMonth;
     },
     actualLocaleMonth(){
       return getActualMonth(this.defaultDate);
