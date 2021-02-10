@@ -35,7 +35,7 @@ describe('components/CounterButtonComponent', () => {
       expect(wrapper.emitted().increment.length).toBe(1);
       expect(wrapper.emitted().increment[0]).toEqual([2]);
 
-      wrapper.setProps({ count: 2 });
+      await wrapper.setProps({ count: 2 });
       await button.trigger('click');
       expect(wrapper.emitted().increment.length).toBe(2);
       expect(wrapper.emitted().increment[1]).toEqual([3]);
