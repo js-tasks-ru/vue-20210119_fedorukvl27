@@ -31,7 +31,7 @@ export const MeetupsCalendar = {
   },
   data(){
     return {
-      defaultDate: new Date(),
+      defaultDate: new Date(new Date().setDate(1)),
     };
   },
   computed:{
@@ -65,7 +65,7 @@ export const MeetupsCalendar = {
       return this.defaultDate.getFullYear();
     },
     actualDaysInMonthList(){
-      return getDaysInMonth(this.actualMonth,this.actualYear)
+      return getDaysInMonth(this.actualMonth,this.actualYear,this.defaultDate)
     },
   },
   methods:{

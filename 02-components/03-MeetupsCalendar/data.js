@@ -12,26 +12,26 @@ export function getActualMonth(date,action){
     }
 }
 
-export function getDaysInMonth(month, year) {
-    const daysInCurrentMonth=new Date(year, month+1, 0).getDate();
+export function getDaysInMonth(month, year, date) {
+    const lastDay=new Date(year, month+1, 0).getDate();
     const prevLastDay = new Date(year, month, 0).getDate();
-    const firstDayIndex = new Date(year, month, 0).getDay();
-    const lastDayIndex = new Date(year, (month+1), 0).getDay();
+    const firstDayIndex = date.getDay() ? date.getDay() - 1 : 6;
+    const nextDays = (lastDay + firstDayIndex) % 7 ? 7 - ((lastDay + firstDayIndex) % 7) : 0;
     const daysList = [];
     for (let day=firstDayIndex; day>0 ;day--){
         daysList.push({
             id: prevLastDay-day +1,
             isPreviousMonth: true,
-            date: new Date(year,month,prevLastDay-day+2).toISOString().slice(0,10),
+            date:  new Date(year,month,prevLastDay-day+2).toISOString().slice(0,10),
         });
-    }
-    for (let day = 1; day <= daysInCurrentMonth;day++){
+    };
+    for (let day = 1; day <= lastDay ;day++){
         daysList.push({
             id: day,
-            date: new Date(year,month,day+1).toISOString().slice(0,10),
+            date:  new Date(year,month,day+1).toISOString().slice(0,10),
         });
     }
-    for (let day = 1; day <= lastDayIndex; day++){
+    for (let day = 1; day <= nextDays; day++){
         daysList.push({
             id: day,
             isNextMonth: true,
