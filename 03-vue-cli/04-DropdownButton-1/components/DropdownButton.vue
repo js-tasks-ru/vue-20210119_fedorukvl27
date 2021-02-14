@@ -63,8 +63,7 @@ export default {
 
   computed:{
     pickedOption(){
-      const actualIndex = this.options.findIndex(option=>option.value === this.value);
-      const actualOption = this.options[actualIndex];
+      const actualOption = this.options.find(option=>option.value === this.value);
       return {...actualOption}
     }
   },
