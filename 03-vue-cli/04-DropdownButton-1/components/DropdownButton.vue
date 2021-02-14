@@ -19,10 +19,9 @@
       :class="{'show':isMenuOpened}"
       >
       <button 
-        class="dropdown__item"
+        class="dropdown__item dropdown__item_icon"
         type="button"
         v-for="option in options"
-        :class="{'dropdown__item_icon':option.icon}"
         :key="option.value"
         @click="handleClick(option.value)"
       >
