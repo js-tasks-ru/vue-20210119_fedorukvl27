@@ -35,8 +35,7 @@ export default {
         toastIcon,
       };
       this.toasts.push(toast);
-      const toastIndex=this.toasts.indexOf(toast);
-      this.deleteTost(toastIndex);
+      this.deleteTost()
     },
     error(message) {
       this.makeToast(message,'toast_error','alert-circle');
@@ -44,8 +43,8 @@ export default {
     success(message) {
       this.makeToast(message,'toast_success','check-circle');
     },
-    deleteTost(index){
-      setTimeout(()=>{this.toasts.splice(index,1)},DELAY);
+    deleteTost(){
+      setTimeout(()=>{this.toasts.pop()},DELAY);
     }
   },
 };
