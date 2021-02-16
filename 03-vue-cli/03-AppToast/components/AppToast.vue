@@ -44,7 +44,7 @@ export default {
       this.makeToast(message,'toast_success','check-circle');
     },
     deleteTost(){
-      setTimeout(()=>{this.toasts.pop()},DELAY);
+      setTimeout(()=>{this.toasts.shift()},DELAY);
     }
   },
 };
