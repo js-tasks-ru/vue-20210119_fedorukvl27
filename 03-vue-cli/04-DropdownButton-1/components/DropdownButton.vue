@@ -4,14 +4,15 @@
     :class="{'show':isMenuOpened}">
     <button 
       type="button" 
-      class="button dropdown__toggle dropdown__toggle_icon"
+      class="button dropdown__toggle"
+      :class="{'dropdown__toggle_icon':optionHasIcon}"
       @click="toggleMenu"
       >
       <app-icon
         :icon="pickedOption.icon"
-        v-if="pickedOption.icon"
+        v-if="pickedOption && pickedOption.icon"
       />
-      {{`${title} ${pickedOption.text? `- ${pickedOption.text}` : ''}`}}
+      {{`${title} ${pickedOption && pickedOption.text? `- ${pickedOption.text}` : ''}`}}
     </button>
 
     <div 
@@ -19,7 +20,8 @@
       :class="{'show':isMenuOpened}"
       >
       <button 
-        class="dropdown__item dropdown__item_icon"
+        class="dropdown__item"
+        :class="{'dropdown__item_icon':optionHasIcon}"
         type="button"
         v-for="option in options"
         :key="option.value"
@@ -64,7 +66,10 @@ export default {
   computed:{
     pickedOption(){
       const actualOption = this.options.find(option=>option.value === this.value);
-      return {...actualOption}
+      return actualOption;
+    },
+    optionHasIcon(){
+      return this.options.some(option=>option.icon);
     }
   },
 
