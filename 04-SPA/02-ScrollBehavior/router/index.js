@@ -3,8 +3,21 @@ import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
 
-export function scrollBehavior() {
-  // Место для решения
+export function scrollBehavior(to, from, savedPosition) {
+  let position ={};
+  if(savedPosition){
+    position = savedPosition;
+  }
+  else if(to.hash){
+    position.selector=to.hash;
+  }
+  else if(to.matched.some(match => match.meta.saveScrollPosition) && from.matched.some(match => match.meta.saveScrollPosition )){
+    position=false;
+  }
+  else{
+    position = {x:0,y:0};
+  }
+  return position;
 }
 
 export const router = new VueRouter({
@@ -18,8 +31,8 @@ export const router = new VueRouter({
     {
       path: '/',
       name: 'index',
-      // alias: 'meeetups'
-      // redirect: '/meetups',
+      alias: 'meeetups',
+      redirect: '/meetups',
       component: () => import('../views/MeetupsPage'),
     },
     {
