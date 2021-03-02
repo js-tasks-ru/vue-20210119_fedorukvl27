@@ -10,11 +10,13 @@ export const routes = [
       {
         path: 'a',
         component: PageA,
+        props: true,
       },
       {
         path: 'b',
         name: 'b',
         component: PageB,
+        props: true,
       },
     ],
   },
