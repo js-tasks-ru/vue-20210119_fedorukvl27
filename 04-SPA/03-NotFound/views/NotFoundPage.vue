@@ -1,5 +1,15 @@
-<template></template>
+<template>
+    <div class="page page_404">
+        <h1>
+            Страница не найдена <span>404</span>
+        </h1>
+    </div>
+</template>
 
-<script></script>
+<script>
+export default{
+    name: 'NotFoundPage',
+}
+</script>
 
-<style scoped></style>
+<style scoped src="@/../public/assets/styles/_page_404.css"></style>
