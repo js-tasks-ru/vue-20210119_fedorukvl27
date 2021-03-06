@@ -3,9 +3,9 @@
     <header>
       <nav>
         <ul>
-          <li><router-link to="/">/</router-link></li>
-          <li><router-link to="/login">/login</router-link></li>
-          <li><router-link to="/register">/register</router-link></li>
+          <li><router-link :to="{name: 'index'}">/</router-link></li>
+          <li><router-link :to="{name: 'login'}">/login</router-link></li>
+          <li><router-link :to="{name: 'register'}">/register</router-link></li>
         </ul>
       </nav>
     </header>

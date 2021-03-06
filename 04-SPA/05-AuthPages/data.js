@@ -33,3 +33,29 @@ export async function register(email, fullname, password) {
     body: JSON.stringify({ email, fullname, password }),
   }).then((res) => res.json());
 }
+
+export function formValidation(){
+  if(!this.userMail.length){
+    alert ('Требуется ввести Email');
+    return false;
+  }
+  else if(!this.userPassword.length){
+    alert('Требуется ввести пароль');
+    return false;
+  }
+  else if(this.$options.name === 'RegisterPage' && !this.userName.length){
+    alert('Требуется ввести полное имя');
+    return false;
+  }
+  else if(this.$options.name === 'RegisterPage' && !this.userAgreement){
+    alert('Требуется согласиться с условиями');
+    return false;
+  }
+  else if(this.$options.name === 'RegisterPage' && (this.userPassword !== this.repeatedPassword)){
+    alert('Пароли не совпадают');
+    return false;
+  }
+  else{
+    return true;
+  }
+};
