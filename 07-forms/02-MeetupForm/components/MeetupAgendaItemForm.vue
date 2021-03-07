@@ -1,6 +1,7 @@
 <template>
   <div class="form-section form-section_inner">
-    <button type="button" class="remove-button" @click="$emit('remove')">
+    <button type="button" class="remove-button"
+    @click="$emit('remove')">
       <img src="/assets/icons/icon-trash.svg" alt="trash" />
     </button>
 
