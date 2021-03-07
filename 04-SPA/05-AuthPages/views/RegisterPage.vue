@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import { register, formValidation } from '../data';
+import { register} from '../data';
 
 export default {
   name: 'RegisterPage',
@@ -78,28 +78,36 @@ export default {
     }
   },
   methods:{
-    setInitialData(){
-      this.userMail='';
-      this.userPassword='';
-      this.userName='';
-      this.repeatedPassword='';
-      this.userAgreement=false;
-    },
     async registration(){
-      if(formValidation.bind(this)()){
-        try{
-          let response = await register(this.userMail,this.userName,this.userPassword);
-          if(response.error){
-            throw new Error(response.message);
-          }
-          this.setInitialData();
-          alert(`Вы зарегистрированы как пользователь с id: ${response.id}`);
-        }
-        catch(error){
-          alert(error);
-        }
+      if(!this.userMail.length){
+        alert ('Требуется ввести Email');
+        return false;
       }
-    },
+      else if(!this.userPassword.length){
+        alert('Требуется ввести пароль');
+        return false;
+      }
+      else if(!this.userName.length){
+        alert('Требуется ввести полное имя');
+        return false;
+      }
+      else if(!this.userAgreement){
+        alert('Требуется согласиться с условиями');
+        return false;
+      }
+      else if(this.userPassword !== this.repeatedPassword){
+        alert('Пароли не совпадают');
+        return false;
+      }
+      else{
+        let response = await register(this.userMail,this.userName,this.userPassword);
+        if(response.error){
+          alert (response.message);
+          return false;
+        }
+        alert(response.id)
+      }
+    }
   },
 };
 </script>

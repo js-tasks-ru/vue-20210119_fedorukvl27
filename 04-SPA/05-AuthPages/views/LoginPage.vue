@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { login, formValidation } from '../data';
+import { login } from '../data';
 
 export default {
   name: 'LoginPage',
@@ -46,23 +46,22 @@ export default {
     };
   },
   methods:{
-    setInitialData(){
-      this.userMail='';
-      this.userPassword='';
-    },
     async signIn(){
-      if(formValidation.bind(this)()){
-        try{
-          let response = await login(this.userMail,this.userPassword);
-          if(response.error){
-            throw new Error(response.message);
-          }
-          this.setInitialData();
-          alert(`Здравствуйте, ${response.fullname}!`);
+      if(!this.userMail.length){
+        alert ('Требуется ввести Email');
+        return false;
+      }
+      else if(!this.userPassword.length){
+        alert('Требуется ввести пароль');
+        return false;
+      }
+      else{
+        let response = await login(this.userMail,this.userPassword);
+        if(response.error){
+          alert(response.message);
+          return false;
         }
-        catch(error){
-          alert(error);
-        }
+        alert(response.fullname);
       }
     },
   }
