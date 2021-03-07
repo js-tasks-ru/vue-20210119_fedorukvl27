@@ -2,8 +2,8 @@
   <div class="content-tabs">
     <div class="content-tabs__nav">
       <router-link
-        v-for="(tab,index) in tabs"
-        :key="index"
+        v-for="tab in tabs"
+        :key="tab.text"
         :to="tab.to"
         class="content-tabs__tab"
         active-class="content-tabs__tab_active"
