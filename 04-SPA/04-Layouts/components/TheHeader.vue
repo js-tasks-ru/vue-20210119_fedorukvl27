@@ -1,6 +1,10 @@
 <template>
   <header class="header">
-    <h1>Meetups</h1>
+    <h1>
+      <router-link :to="{name: 'meetups'}">
+        <img src="../assets/logo.svg" alt="Meetups"/>
+      </router-link>
+    </h1>
     <nav>
       <router-link :to="{name:'meetups'}">Митапы</router-link>
       <router-link :to="{name:'form'}">Создать митап</router-link>

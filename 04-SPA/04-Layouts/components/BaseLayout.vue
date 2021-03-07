@@ -2,7 +2,7 @@
   <div>
     <the-header></the-header>
     <main>
-      <router-view/>
+      <slot/>
     </main>
     <the-footer></the-footer>
   </div>
