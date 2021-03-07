@@ -1,6 +1,5 @@
 <template>
-  <form class="form">
-    <form class="form" @submit.prevent="registration()">
+  <form class="form" @submit.prevent="registration()">
     <div class="form-group">
       <label class="form-label">Email</label>
       <div class="input-group">
@@ -60,7 +59,6 @@
       <router-link :to="{name:'login'}" class="link">Войдите</router-link>
     </div>
   </form>
-  </form>
 </template>
 
 <script>
@@ -83,20 +81,20 @@ export default {
         alert ('Требуется ввести Email');
         return false;
       }
-      else if(!this.userPassword.length){
-        alert('Требуется ввести пароль');
-        return false;
-      }
       else if(!this.userName.length){
         alert('Требуется ввести полное имя');
         return false;
       }
-      else if(!this.userAgreement){
-        alert('Требуется согласиться с условиями');
+      else if(!this.userPassword.length){
+        alert('Требуется ввести пароль');
         return false;
       }
       else if(this.userPassword !== this.repeatedPassword){
         alert('Пароли не совпадают');
+        return false;
+      }
+      else if(!this.userAgreement){
+        alert('Требуется согласиться с условиями');
         return false;
       }
       else{
