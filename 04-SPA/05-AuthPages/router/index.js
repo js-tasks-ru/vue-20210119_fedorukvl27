@@ -10,7 +10,18 @@ export const router = new VueRouter({
   routes: [
     {
       path: '/',
+      name: 'index',
       component: IndexPage,
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: ()=> import('../views/LoginPage.vue'),
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: ()=> import('../views/RegisterPage.vue'),
     },
   ],
 });
